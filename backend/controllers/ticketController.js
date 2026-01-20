@@ -7,7 +7,7 @@ export const createTicket = async (req, res) => {
       title,
       description,
       user: req.user._id,
-      email: req.user.email, // ✅ Store user's email
+      email: req.user.email, 
     });
     await ticket.save();
     res.status(201).json(ticket);
