@@ -57,72 +57,72 @@ const TicketForm = ({ onTicketCreated }) => {
   };
 
   return (
-    <section
-      style={{
-        marginBottom: 40,
-        padding: 20,
-        border: '1px solid #ccc',
-        borderRadius: 6,
-        backgroundColor: '#f9f9f9',
-        maxWidth: '600px',
-        margin: 'auto',
-      }}
+    <section className="max-w-xl mx-auto mb-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl">
+  <h2 className="text-2xl font-semibold text-white mb-6">
+    Create a New <span className="text-teal-400">Support Ticket</span>
+  </h2>
+
+  <form onSubmit={handleSubmit} className="space-y-5">
+    {/* Title */}
+    <div>
+      <label
+        htmlFor="title"
+        className="block text-sm text-gray-300 mb-1"
+      >
+        Title
+      </label>
+      <input
+        id="title"
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+        placeholder="Enter ticket title"
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+      />
+    </div>
+
+    {/* Description */}
+    <div>
+      <label
+        htmlFor="description"
+        className="block text-sm text-gray-300 mb-1"
+      >
+        Description
+      </label>
+      <textarea
+        id="description"
+        rows={5}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+        placeholder="Describe your issue"
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400 resize-none"
+      />
+    </div>
+
+    {/* Submit */}
+    <button
+      type="submit"
+      className="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 font-semibold text-sm hover:opacity-90 transition"
     >
-      <h2>Create a New Support Ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12 }}>
-          <label htmlFor="title" style={{ display: 'block', marginBottom: 6 }}>
-            Title:
-          </label>
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            style={{ width: '100%', padding: 8, fontSize: 16 }}
-            placeholder="Enter ticket title"
-          />
-        </div>
+      Submit Ticket
+    </button>
 
-        <div style={{ marginBottom: 12 }}>
-          <label htmlFor="description" style={{ display: 'block', marginBottom: 6 }}>
-            Description:
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            rows={5}
-            style={{ width: '100%', padding: 8, fontSize: 16 }}
-            placeholder="Describe your issue"
-          />
-        </div>
+    {/* Messages */}
+    {error && (
+      <p className="text-red-400 font-medium mt-2">
+        {error}
+      </p>
+    )}
+    {successMsg && (
+      <p className="text-green-400 font-medium mt-2">
+        {successMsg}
+      </p>
+    )}
+  </form>
+</section>
 
-        <button
-          type="submit"
-          style={{
-            backgroundColor: '#004aad',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: 4,
-            cursor: 'pointer',
-            fontSize: 16,
-          }}
-        >
-          Submit Ticket
-        </button>
-
-        {error && (
-          <p style={{ color: 'red', marginTop: 10, fontWeight: 'bold' }}>{error}</p>
-        )}
-        {successMsg && (
-          <p style={{ color: 'green', marginTop: 10, fontWeight: 'bold' }}>{successMsg}</p>
-        )}
-      </form>
-    </section>
   );
 };
 

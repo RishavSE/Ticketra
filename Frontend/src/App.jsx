@@ -30,12 +30,12 @@ const App = () => {
     if (loading) return null; // Wait for localStorage check
 
     if (!user || !token) {
-      console.warn("⚠️ No user/token found. Redirecting to /login");
+      console.warn("No user/token found. Redirecting to /login");
       return <Navigate to="/login" replace />;
     }
 
     if (roles && !roles.includes(user.role)) {
-      console.warn(`⚠️ Role '${user.role}' not allowed. Redirecting to /login`);
+      console.warn(`Role '${user.role}' not allowed. Redirecting to /login`);
       return <Navigate to="/login" replace />;
     }
 
@@ -43,7 +43,7 @@ const App = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Optional loader
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -62,9 +62,9 @@ const App = () => {
             />
           }
         />
-        
-      
-<Route path="/register" element={<Register />} />
+
+
+        <Route path="/register" element={<Register />} />
         <Route
           path="/user-dashboard"
           element={
