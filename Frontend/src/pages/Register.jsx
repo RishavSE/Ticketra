@@ -30,62 +30,92 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-form glass-effect" onSubmit={handleSubmit}>
-        <h2 className="auth-heading">Create your QuickDesk account</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
+  <form
+    onSubmit={handleSubmit}
+    className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl mt-5 mb-5"
+  >
+    <h2 className="text-2xl font-semibold text-white text-center">
+      Create your <span className="text-teal-400">QuickDesk</span> account
+    </h2>
+    <p className="text-sm text-gray-300 text-center mt-1 mb-8">
+      Get started by creating your account
+    </p>
 
-        <div className="form-group">
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter full name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Create password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Choose Role</label>
-          <select name="role" value={formData.role} onChange={handleChange}>
-            <option value="user">User</option>
-            <option value="agent">Support Agent</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-
-        <button type="submit" className="auth-btn">Register</button>
-
-        <p className="auth-switch">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+    {/* Full Name */}
+    <div className="mb-5">
+      <label className="block text-sm text-gray-300 mb-1">Full Name</label>
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter full name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+      />
     </div>
+
+    {/* Email */}
+    <div className="mb-5">
+      <label className="block text-sm text-gray-300 mb-1">Email</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+      />
+    </div>
+
+    {/* Password */}
+    <div className="mb-5">
+      <label className="block text-sm text-gray-300 mb-1">Password</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Create password"
+        value={formData.password}
+        onChange={handleChange}
+        required
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+      />
+    </div>
+
+    {/* Role */}
+    <div className="mb-6">
+      <label className="block text-sm text-gray-300 mb-1">Choose Role</label>
+      <select
+        name="role"
+        value={formData.role}
+        onChange={handleChange}
+        className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-white border border-white/20 focus:outline-none focus:border-teal-400 focus:ring-1 focus:ring-teal-400"
+      >
+        <option className="text-black" value="user">User</option>
+        <option className="text-black" value="agent">Support Agent</option>
+        <option className="text-black" value="admin">Admin</option>
+      </select>
+    </div>
+
+    {/* Button */}
+    <button
+      type="submit"
+      className="w-full py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-cyan-400 text-slate-900 font-semibold text-sm hover:opacity-90 transition"
+    >
+      Register
+    </button>
+
+    <p className="text-sm text-gray-300 text-center mt-6">
+      Already have an account?{" "}
+      <Link to="/login" className="text-teal-400 hover:underline">
+        Login
+      </Link>
+    </p>
+  </form>
+</div>
+
   );
 };
 

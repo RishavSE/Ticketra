@@ -21,19 +21,28 @@ const UserDashboard = () => {
   const refreshTickets = () => setRefreshKey((oldKey) => oldKey + 1);
 
   return (
-    <div>
-      <Navbar user={user} onLogout={handleLogout} />
+    <div className="min-h-screen bg-slate-900 text-white ">
+  {/* Navbar */}
+  <Navbar user={user} onLogout={handleLogout} />
 
-      <div style={{ maxWidth: 900, margin: '20px auto', padding: '0 15px' }}>
-        <h1>User Dashboard</h1>
+  {/* Main Content */}
+  <div className="max-w-5xl mx-auto px-4 py-8">
+    <h1 className="text-3xl font-semibold mb-6">
+      <span className="text-teal-400">User Dashboard</span>
+    </h1>
 
-        {/* Pass refreshTickets callback to TicketForm */}
-        <TicketForm onTicketCreated={refreshTickets} />
-
-        {/* Pass refreshKey to TicketList to refetch tickets */}
-        <TicketList key={refreshKey} />
-      </div>
+    {/* Ticket Form Card */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 mb-8 shadow-xl">
+      <TicketForm onTicketCreated={refreshTickets} />
     </div>
+
+    {/* Ticket List Card */}
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl">
+      <TicketList key={refreshKey} />
+    </div>
+  </div>
+</div>
+
   );
 };
 
