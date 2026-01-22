@@ -7,16 +7,14 @@ const UserDashboard = () => {
   const storedUser = localStorage.getItem('user');
   const user = storedUser ? JSON.parse(storedUser) : null;
 
-  // Logout handler
+  
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     window.location.href = '/login';
   };
 
-  // To refresh tickets in TicketList after new ticket created,
-  // we'll lift state or trigger a callback. 
-  // For simplicity, we'll use a key trick here:
+ 
   const [refreshKey, setRefreshKey] = React.useState(0);
   const refreshTickets = () => setRefreshKey((oldKey) => oldKey + 1);
 

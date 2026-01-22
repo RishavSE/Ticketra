@@ -19,7 +19,7 @@ const Auth = () => {
     const endpoint = isLogin ? 'login' : 'register';
 
     try {
-      await axios.post(`http://localhost:5000/api/${endpoint}`, formData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/${endpoint}`, formData);
       toast.success(`${isLogin ? 'Login' : 'Registration'} successful!`);
       navigate(isLogin ? '/dashboard' : '/login');
     } catch (err) {

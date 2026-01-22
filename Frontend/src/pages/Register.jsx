@@ -20,9 +20,10 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:5000/api/register', formData);
-      alert("registered sucessfully "); // Or show using toast
-      navigate('/login'); // Redirect to login
+      const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}register`, formData);
+      alert("registered sucessfully "); 
+      navigate('/login'); 
     } catch (err) {
       alert(err.response?.data?.message || 'Registration failed');
       console.error(err);
@@ -36,7 +37,7 @@ const Register = () => {
     className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl mt-5 mb-5"
   >
     <h2 className="text-2xl font-semibold text-white text-center">
-      Create your <span className="text-teal-400">QuickDesk</span> account
+      Create your <span className="text-teal-400">Ticketra</span> account
     </h2>
     <p className="text-sm text-gray-300 text-center mt-1 mb-8">
       Get started by creating your account

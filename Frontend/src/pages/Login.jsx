@@ -15,7 +15,8 @@ const Login = ({ onLoginSuccess }) => {
     console.log('🔐 Logging in with:', { email, password, role });
 
     try {
-      const res = await axios.post('http://localhost:5000/api/login', {
+      const res = await axios.post( 
+        `${import.meta.env.VITE_API_URL}/login`, {
         email,
         password,
         role,
@@ -61,7 +62,7 @@ const Login = ({ onLoginSuccess }) => {
     className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl"
   >
     <h2 className="text-2xl font-semibold text-white text-center">
-      Login to <span className="text-teal-400">QuickDesk</span>
+      Login to <span className="text-teal-400">Ticketra</span>
     </h2>
     <p className="text-sm text-gray-300 text-center mt-1 mb-8">
       Welcome back! Please login to your account
@@ -94,7 +95,7 @@ const Login = ({ onLoginSuccess }) => {
     </div>
 
     {/* Role */}
-    <div className="mb-6">
+    {/* <div className="mb-6">
       <label className="block text-sm text-gray-300 mb-1">Select Role</label>
       <select
         value={role}
@@ -105,7 +106,7 @@ const Login = ({ onLoginSuccess }) => {
         <option className="text-black" value="agent">Support Agent</option>
         <option className="text-black" value="admin">Admin</option>
       </select>
-    </div>
+    </div> */}
 
     {/* Button */}
     <button

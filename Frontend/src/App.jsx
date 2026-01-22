@@ -11,7 +11,7 @@ import SupportDashboard from "./support/supportdashboard";
 const App = () => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -21,14 +21,13 @@ const App = () => {
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
     }
-    setLoading(false); // Done checking storage
+    setLoading(false); 
   }, []);
 
   console.log("📦 App Render | User:", user, "| Token:", token);
 
   const ProtectedRoute = ({ children, roles }) => {
-    if (loading) return null; // Wait for localStorage check
-
+    if (loading) return null; 
     if (!user || !token) {
       console.warn("No user/token found. Redirecting to /login");
       return <Navigate to="/login" replace />;

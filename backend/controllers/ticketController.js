@@ -1,4 +1,4 @@
-import Ticket from "../models/Ticket.js"; // adjust path
+import Ticket from "../models/Ticket.js"; 
 
 export const createTicket = async (req, res) => {
   try {
@@ -30,14 +30,14 @@ export const getUserTickets = async (req, res) => {
 };
 
 
-// @desc Get single ticket by ID
+
 export const getTicketById = async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) return res.status(404).json({ message: "Ticket not found" });
 
-    // Ensure user is owner
+   
     if (ticket.user.toString() !== req.user.id) {
       return res.status(403).json({ message: "Access denied" });
     }
@@ -77,16 +77,18 @@ export const updateTicketStatusOrComment = async (req, res) => {
     const ticket = await Ticket.findById(id);
     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
 
-    // Update status if provided
+    
     if (status) {
       ticket.status = status;
     }
 
-    // Push new comment if provided (expects object with text and author)
-    if (comment && comment.text && comment.commentedBy) {
+    
+    if (comment && comment.trim()) {
+      const isStaff = req.user.role === 'admin' || req.user.role === 'agent';
+
       ticket.comments.push({
-        text: comment.text,
-        author: comment.commentedBy,
+        text: comment.trim(),
+        author: isStaff ? 'Support' : req.user.email,
         createdAt: new Date(),
       });
     }
@@ -99,3 +101,4 @@ export const updateTicketStatusOrComment = async (req, res) => {
     return res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+

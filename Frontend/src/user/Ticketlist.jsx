@@ -19,7 +19,8 @@ const TicketList = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/tickets', {
+        const response = await axios.get(
+           `${import.meta.env.VITE_API_URL}/tickets`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,42 +43,43 @@ const TicketList = () => {
     return 'status';
   };
 
-  const handleCommentSubmit = async () => {
-    if (!commentText.trim()) return;
+ const handleCommentSubmit = async () => {
+  if (!commentText.trim() || !selectedTicket?._id) return;
 
-    setSubmitting(true);
-    const token = localStorage.getItem('token');
+  setSubmitting(true);
+  const token = localStorage.getItem('token');
 
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/api/tickets/${selectedTicket._id}/comment`,
-        { comment: commentText.trim() },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  try {
+    const response = await axios.put(
+       `${import.meta.env.VITE_API_URL}/tickets/update/${selectedTicket._id}`,
+      { comment: commentText.trim() },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-      // Update selected ticket's comments locally
-      const updatedTicket = { ...selectedTicket };
-      updatedTicket.comments = response.data.comments;
-      setSelectedTicket(updatedTicket);
+    const updatedTicket = response.data.ticket;
 
-      // Also update the ticket in the main tickets list
-      setTickets((prev) =>
-        prev.map((t) =>
-          t._id === updatedTicket._id ? updatedTicket : t
-        )
-      );
+    setSelectedTicket(updatedTicket);
 
-      setCommentText('');
-    } catch (error) {
-      console.error('Failed to submit comment:', error.response?.data || error.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    setTickets((prev) =>
+      prev.map((t) =>
+        t._id === updatedTicket._id ? updatedTicket : t
+      )
+    );
+
+    setCommentText('');
+  } catch (error) {
+    console.error(
+      'Failed to submit comment:',
+      error.response?.data || error.message
+    );
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl">

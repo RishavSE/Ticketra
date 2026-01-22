@@ -28,7 +28,7 @@ const TicketForm = ({ onTicketCreated }) => {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/tickets',
+         `${import.meta.env.VITE_API_URL}/tickets`,
         { title, description, email }, // ✅ include email now
         {
           headers: {
