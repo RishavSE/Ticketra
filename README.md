@@ -21,7 +21,6 @@ QuickDesk is a simple, easy-to-use help desk ticketing system built with the MER
   - Update ticket status and add comments
 
 ### 🚧 Coming Soon
-- Forgot Password (Reset via Email)
 - Admin Panel (View all users, system metrics)
 
 ---
