@@ -13,21 +13,17 @@ connectDB();
 
 const app = express();
 
-// __dirname fix (ES module)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors());
 app.use(express.json());
 
-// API routes FIRST
 app.use("/api", authRoutes);
 app.use("/api/tickets", ticketRoutes);
 
-// React build
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-// ✅ FIXED ROUTE
 app.get("/*", (req, res) => {
   res.sendFile(
     path.join(__dirname, "../client/build", "index.html")
