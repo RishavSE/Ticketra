@@ -21,7 +21,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}register`, formData);
+          `${import.meta.env.VITE_API_URL}/register`, formData);
       alert("registered sucessfully "); 
       navigate('/login'); 
     } catch (err) {
