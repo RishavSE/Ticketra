@@ -1,6 +1,6 @@
-# 🧾 QuickDesk – MERN Help Desk Ticketing System
+# 🧾 Ticketra – MERN Help Desk Ticketing System
 
-QuickDesk is a simple, easy-to-use help desk ticketing system built with the MERN stack. Users can register, log in, and raise support tickets, while support agents can view and respond to tickets through their dashboard.
+Ticketra is a simple, easy-to-use help desk ticketing system built with the MERN stack. Users can register, log in, and raise support tickets, while support agents can view and respond to tickets through their dashboard.
 
 ---
 
