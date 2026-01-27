@@ -1,4 +1,4 @@
-# 🎟️ Ticketra – MERN Help Desk Ticketing System
+#  Ticketra – MERN Help Desk Ticketing System
 
 Ticketra is a **role-based help desk ticketing system** built using the **MERN stack**. It is designed to simulate real-world customer support workflows, allowing users to raise tickets and communicate with support agents, while support staff manage, respond to, and resolve issues efficiently.
 
