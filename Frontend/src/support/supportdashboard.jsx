@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './SupportDashboard.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./SupportDashboard.css";
 
 const SupportDashboard = () => {
   const [tickets, setTickets] = useState([]);
@@ -12,25 +12,33 @@ const SupportDashboard = () => {
       setLoading(true);
       setTickets([]);
 
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) throw new Error('User not logged in');
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) throw new Error("User not logged in");
 
       const role = user.role;
-      if (role !== 'admin' && role !== 'agent') {
-        throw new Error('Access denied: only admin or agent can fetch all tickets');
+      if (role !== "admin" && role !== "agent") {
+        throw new Error(
+          "Access denied: only admin or agent can fetch all tickets",
+        );
       }
 
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/tickets/agent`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        `${import.meta.env.VITE_API_URL}/tickets/agent`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
-      setTickets(response.data);
+      const sortedTickets = response.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      );
+
+      setTickets(sortedTickets);
     } catch (error) {
-      console.error('Error fetching tickets:', error.message);
+      console.error("Error fetching tickets:", error.message);
       setTickets([]);
     } finally {
       setLoading(false);
@@ -39,38 +47,40 @@ const SupportDashboard = () => {
 
   const handleStatusChange = async (ticketId, newStatus) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       await axios.put(
-         `${import.meta.env.VITE_API_URL}/tickets/update/${ticketId}`,
+        `${import.meta.env.VITE_API_URL}/tickets/update/${ticketId}`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       setTickets((prev) =>
         prev.map((ticket) =>
-          ticket._id === ticketId ? { ...ticket, status: newStatus } : ticket
-        )
+          ticket._id === ticketId ? { ...ticket, status: newStatus } : ticket,
+        ),
       );
     } catch (error) {
-      console.error('Error updating status:', error.response?.data || error.message);
+      console.error(
+        "Error updating status:",
+        error.response?.data || error.message,
+      );
     }
   };
 
-  // ✅ Edited handleCommentSubmit
   const handleCommentSubmit = async (ticketId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const commentText = commentMap[ticketId];
 
       if (!token || !commentText?.trim()) return;
 
       await axios.put(
-         `${import.meta.env.VITE_API_URL}/tickets/update/${ticketId}`,
-        { comment: commentText.trim() }, // send just string
-        { headers: { Authorization: `Bearer ${token}` } }
+        `${import.meta.env.VITE_API_URL}/tickets/update/${ticketId}`,
+        { comment: commentText.trim() }, 
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      // Update local state to show the new comment immediately
+     
       setTickets((prev) =>
         prev.map((ticket) =>
           ticket._id === ticketId
@@ -80,26 +90,29 @@ const SupportDashboard = () => {
                   ...(ticket.comments || []),
                   {
                     text: commentText.trim(),
-                    author: 'Support', // frontend will match backend behavior
+                    author: "Support",
                     createdAt: new Date(),
                   },
                 ],
               }
-            : ticket
-        )
+            : ticket,
+        ),
       );
 
-      // Clear textarea
-      setCommentMap((prev) => ({ ...prev, [ticketId]: '' }));
+     
+      setCommentMap((prev) => ({ ...prev, [ticketId]: "" }));
     } catch (error) {
-      console.error('Error submitting comment:', error.response?.data || error.message);
+      console.error(
+        "Error submitting comment:",
+        error.response?.data || error.message,
+      );
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
   };
 
   useEffect(() => {
@@ -131,10 +144,9 @@ const SupportDashboard = () => {
         </nav>
       </aside>
 
-      
       <main className="flex-1 p-8 overflow-y-auto">
         <h1 className="text-3xl font-semibold mb-6">
-           <span className="text-teal-400">Support Agent Dashboard</span>
+          <span className="text-teal-400">Support Agent Dashboard</span>
         </h1>
 
         {loading ? (
@@ -148,10 +160,16 @@ const SupportDashboard = () => {
                 key={ticket._id}
                 className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl"
               >
-                
                 <h3 className="text-xl font-semibold mb-2">
                   {ticket.title || "No Subject"}
                 </h3>
+                <p className="text-gray-400 text-xs mb-2">
+                  🕒 Created on{" "}
+                  {new Date(ticket.createdAt).toLocaleString("en-IN", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
+                </p>
 
                 <p className="text-gray-300 text-sm mb-1">
                   <strong>Email:</strong> {ticket.email}
@@ -178,7 +196,9 @@ const SupportDashboard = () => {
                   </button>
 
                   <button
-                    onClick={() => handleStatusChange(ticket._id, "in-progress")}
+                    onClick={() =>
+                      handleStatusChange(ticket._id, "in-progress")
+                    }
                     className="px-3 py-1.5 rounded-lg bg-blue-400 text-slate-900 text-sm font-medium cursor-pointer"
                   >
                     In Progress
